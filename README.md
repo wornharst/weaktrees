@@ -1,75 +1,65 @@
-# React + TypeScript + Vite
+# WeakTrees
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive game theory and search tree visualization platform built with React and TypeScript. WeakTrees lets you play classic combinatorial games while simultaneously exploring the underlying decision trees, state-space evaluations, and algorithmic game solvers in real time.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Interactive Gameplay**: Play classic zero-sum and combinatorial games directly in the browser.
+- **Real-Time Tree Visualizer**: Inspect search trees, state evaluations, and branching decisions as turns unfold.
+- **Built-in Solvers**: Algorithmic game-solving engines computing optimal moves and game-theoretic values (win, loss, draw).
+- **Modular Component Architecture**: Decoupled game logic, UI board rendering, and tree visualization pipelines.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## Supported Games
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Game | Solver Engine | Description |
+| :--- | :--- | :--- |
+| **Chopsticks** | `solvers/chopsticks.ts` | Hand-gesture combinatorial game modeled as a directed graph (supporting cyclic state handling). |
+| **Connect 4** | `solvers/connect4.ts` | Minimax/Alpha-Beta search engine evaluating drop tactics and depth-bounded trees. |
+| **Nim** | `solvers/nim.ts` | Classic impartial mathematical game analyzed through Sprague-Grundy theorem & XOR sums (Nim-values). |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Framework**: [React](https://react.dev/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Bundler & Tooling**: [Vite](https://vitejs.dev/)
+- **Styling**: Modern CSS / Modular styling
 
-```
+---
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Project Structure
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+```text
+weaktrees/
+├── public/                 # Static public assets
+├── src/
+│   ├── assets/             # Images, icons, and static graphics
+│   ├── components/         # Game interfaces and visualization UI
+│   │   ├── Chopsticks/
+│   │   │   ├── ChopsticksBoard.tsx
+│   │   │   ├── ChopsticksGameView.tsx
+│   │   │   └── ChopsticksTreeVisualizer.tsx
+│   │   ├── Connect4/
+│   │   │   ├── Connect4Board.tsx
+│   │   │   ├── Connect4GameView.tsx
+│   │   └── Nim/
+│   │       ├── NimBoard.tsx
+│   │       ├── NimGameView.tsx
+│   │       └── NimTreeVisualizer.tsx
+│   │   └── GameHeader.tsx  # Shared game navigation & status bar
+│   ├── solvers/            # Minimax & state-space solving engines
+│   │   ├── chopsticks.ts
+│   │   ├── connect4.ts
+│   │   └── nim.ts
+│   ├── types/              # Shared TypeScript definitions
+│   │   └── game.ts
+│   ├── App.tsx             # Root application component
+│   ├── index.css           # Global stylesheet
+│   └── main.tsx            # Application entrypoint
+├── package.json
+└── tsconfig.json
